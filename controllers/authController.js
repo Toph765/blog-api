@@ -19,11 +19,11 @@ async function signUpPost(req, res) {
 async function logInPost(req, res) {
     const user = await prisma.user.findUnique({
         where: {
-            email: req.email
+            email: req.body.email
         }
     })
 
-    if (!(await bcrypt.compare(req.password, user.password)) || !user) {
+    if (!(await bcrypt.compare(req.body.password, user.password)) || !user) {
         res.sendStatus(403);
     }
 
