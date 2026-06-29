@@ -4,7 +4,7 @@ const blogController = require('../controllers/blogController');
 const passport = require('passport');
 const auth = require('../lib/auth').auth;
 
-blogRouter.get("/", auth, blogController.blogGet);
-//blogRouter.post("/", blogController.blogPost);
+blogRouter.get("/", blogController.blogGet);
+blogRouter.post("/", auth, blogController.blogPost);
 
 module.exports = blogRouter;
