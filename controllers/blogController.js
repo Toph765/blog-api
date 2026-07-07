@@ -77,11 +77,22 @@ async function updateCommentPost(req, res) {
     res.json(updatedComment);
 }
 
+async function commentDel(req, res) {
+    const deletedComment = await prisma.comment.delete({
+        where: {
+            id: parseInt(req.params.commentId),
+        }
+    })
+
+    res.json(deletedComment);
+}
+
 module.exports = {
     blogGet,
     blogPost, 
     updateBlogPut, 
     deleteBlogDel,
     addCommentPost,
-    updateCommentPost
+    updateCommentPost,
+    commentDel
 }
