@@ -31,9 +31,9 @@ model Post {
   published Boolean
   comments  Comment[]
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int
-  author String
+  user   User?   @relation(fields: [userId], references: [id])
+  userId Int?
+  author String?
 }
 
 model Comment {
@@ -41,9 +41,9 @@ model Comment {
   content String
   time    DateTime @default(now())
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int
-  author String
-  post   Post   @relation(fields: [postId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id])
+  userId Int?
+  author String?
+  post   Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId Int
 }
