@@ -9,10 +9,12 @@ app.use(express.urlencoded({ extended: true }));
 
 const blogRouter = require('./routes/blogRouter.js');
 const authRouter = require('./routes/authRouter.js');
+const userRouter = require('./routes/userRouter.js');
 
 const PORT = process.env.PORT || 3000;
 
 app.use("/posts", blogRouter);
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 
 app.listen(PORT, () => { console.log(`Express app listening on port ${PORT}`) });
