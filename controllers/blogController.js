@@ -1,25 +1,54 @@
 const prisma = require('../lib/prisma.js');
 
 async function blogGet(req, res) {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+        where: {
+            published: true,
+        }
+    });
 
     return res.json(posts);
 }
 
 async function blogPost(req, res) {
-    const {title, content} = req.body;
+    const {title, content, published} = req.body;
 
     const newBlog = await prisma.post.create({
         data: {
             title,
             content,
-            published: false,
+            published,
             userId: req.user.id,
             author: req.user.username,
         }
     });
 
     return res.json(newBlog);
+}
+
+async function updateBlogPut(req, res) {
+    const {title, content, published} = req.body;
+
+    const updatedBlog = await prisma.post.update({
+        where: {id: parseInt(req.params.blogId)},
+        data: {
+            title,
+            content,
+            published
+        }
+    })
+
+    return res.json(updatedBlog);
+}
+
+async function deleteBlogDel(req, res) {
+    const deleteBlog = await prisma.post.delete({
+        where: {
+            id: parseInt(req.params.blogId)
+        }
+    })
+
+    return res.json(deleteBlog);
 }
 
 async function addCommentPost(req, res) {
@@ -37,8 +66,22 @@ async function addCommentPost(req, res) {
     return res.json(newComment);
 }
 
+async function updateCommentPost(req, res) {
+    const {content} = req.body;
+
+    const updatedComment = await prisma.comment.update({
+        where: { id: parseInt(req.params.commentId) },
+        data :  { content },
+    })
+
+    res.json(updatedComment);
+}
+
 module.exports = {
     blogGet,
-    blogPost,
-    addCommentPost
+    blogPost, 
+    updateBlogPut, 
+    deleteBlogDel,
+    addCommentPost,
+    updateCommentPost
 }
