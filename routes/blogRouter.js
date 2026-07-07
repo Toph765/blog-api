@@ -10,5 +10,6 @@ blogRouter.delete("/:blogId", auth, blogController.deleteBlogDel);
 
 blogRouter.post("/:blogId", auth, blogController.addCommentPost);
 blogRouter.put("/:blogId/comments/:commentId", auth, blogController.updateCommentPost);
+blogRouter.delete("/:blogId/comments/:commentId/delete", auth, blogController.commentDel);
 
 module.exports = blogRouter;
