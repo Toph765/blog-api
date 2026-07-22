@@ -1,7 +1,7 @@
 const jwtStrategy  = require('passport-jwt').Strategy;
 const extractJwt = require('passport-jwt').ExtractJwt;
 const passport = require('passport');
-const prisma = require('../lib/prisma');
+const prisma = require('./prisma');
 require('dotenv').config();
 
 const opts = {
