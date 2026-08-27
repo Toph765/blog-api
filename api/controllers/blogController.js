@@ -1,6 +1,6 @@
 const prisma = require('../lib/prisma.js');
 
-async function blogGet(req, res) {
+async function allBlogGet(req, res) {
     const posts = await prisma.post.findMany({
         where: {
             published: true,
@@ -8,6 +8,16 @@ async function blogGet(req, res) {
     });
 
     return res.json(posts);
+}
+
+async function blogGet(req, res) {
+    const blog = await prisma.post.findFirst({
+        where: {
+            id: parseInt(req.params.blogId),
+        }
+    });
+
+    return res.json(blog);
 }
 
 async function blogPost(req, res) {
@@ -51,6 +61,16 @@ async function deleteBlogDel(req, res) {
     return res.json(deleteBlog);
 }
 
+async function getComments(req, res) {
+    const comments = await prisma.comment.findMany({
+        where: {
+            postId: parseInt(req.params.blogId),
+        }
+    })
+
+    return res.json(comments);
+}
+
 async function addCommentPost(req, res) {
     const {content} = req.body;
 
@@ -88,10 +108,12 @@ async function commentDel(req, res) {
 }
 
 module.exports = {
+    allBlogGet,
     blogGet,
     blogPost, 
     updateBlogPut, 
     deleteBlogDel,
+    getComments,
     addCommentPost,
     updateCommentPost,
     commentDel
