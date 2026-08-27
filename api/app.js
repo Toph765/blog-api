@@ -1,11 +1,15 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-const passport = require('passport');
+const cors = require('cors');
 require('./lib/passport.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}))
 
 const blogRouter = require('./routes/blogRouter.js');
 const authRouter = require('./routes/authRouter.js');
