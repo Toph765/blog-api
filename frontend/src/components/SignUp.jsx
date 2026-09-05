@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate, useOutletContext } from "react-router";
+import axios from "axios";
 
 const SignUp = () => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
+    const [error, setError] = useState(null);
+    const { handleSetHide } = useOutletContext();
+    const navigate = useNavigate();
 
     const handleSetEmail = (e) => {
         setEmail(e.target.value);
@@ -21,6 +25,28 @@ const SignUp = () => {
 
     const handleSetRePassword = (e) => {
         setRePassword(e.target.value);
+    }
+
+    const handleSignupBtn = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post("http://localhost:3000/auth/sign-up", {
+                email: email,
+                username: username,
+                password: password
+            })
+
+            if (response.data.response === "success") {
+                navigate("/log-in");
+            }
+
+            console.log(response)
+        }
+
+        catch (error) {
+            setError(error);
+        }
     }
 
     return (
@@ -43,9 +69,9 @@ const SignUp = () => {
                     <input type="password" name="newRePassword" id="newRePassword" value={rePassword} onChange={handleSetRePassword} required/>
                 </div>
 
-                <button>Create Account</button>
+                <button onClick={handleSignupBtn}>Create Account</button>
             </form>
-            <Link to="/">Back Home</Link>
+            <Link to="/" onClick={() => handleSetHide(false)}>Back Home</Link>
         </>
     )
 }
