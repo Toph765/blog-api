@@ -8,7 +8,7 @@ const Homepage = () => {
     useEffect(() => {
         const getBlogs = async () => {
             try {
-                const response = await fetch('http://localhost:3000/posts');
+                const response = await fetch('http://localhost:3000/posts/published');
                 const src = await response.json();
                 
                 setBlogs(src);
