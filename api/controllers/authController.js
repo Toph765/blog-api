@@ -14,6 +14,10 @@ async function signUpPost(req, res) {
             password: hashedPassword,
         }
     })
+
+    res.json({
+        response: "success"
+    })
 };
 
 async function logInPost(req, res) {
