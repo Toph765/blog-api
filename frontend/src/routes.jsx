@@ -11,17 +11,19 @@ const routes = [
         children: [
             {index: true, element: <Homepage />},
             {path: "/", element: <Homepage />},
-            {path: "blogposts/:id", element: <Blogpost />}
+            {path: "blogposts/:id", element: <Blogpost />},
+            {path: "log-in", element: <LogIn />},
+            {path:"sign-up", element: <SignUp />}
         ]
     },
-    {
+    /* {
         path: "log-in",
         element: <LogIn />
     },
     {
         path: "sign-up",
         element: <SignUp />
-    }
+    } */
 ]
 
 export default routes;
