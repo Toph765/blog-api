@@ -6,10 +6,10 @@ require('./lib/passport.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
+app.use(cors(/* {
     origin: 'http://localhost:5173',
     credentials: true
-}))
+} */))
 
 const blogRouter = require('./routes/blogRouter.js');
 const authRouter = require('./routes/authRouter.js');
