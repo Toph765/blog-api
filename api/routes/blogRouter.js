@@ -3,7 +3,8 @@ const blogRouter = Router();
 const blogController = require('../controllers/blogController');
 const auth = require('../lib/auth').auth;
 
-blogRouter.get("/", blogController.allBlogGet);
+blogRouter.get("/published", blogController.allPublishedBlogGet);
+blogRouter.get("/all", /* auth, */ blogController.allBlogsGet);
 blogRouter.get("/:blogId", blogController.blogGet);
 blogRouter.post("/", auth, blogController.blogPost);
 blogRouter.put("/:blogId", auth, blogController.updateBlogPut);
