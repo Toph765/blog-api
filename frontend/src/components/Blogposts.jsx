@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router";
+import { useParams, Link, useOutletContext } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -8,6 +8,7 @@ const Blogpost = () => {
     const [newComment, setNewComment] = useState("");
     const [error, setError] = useState(null);
     const { id } = useParams();
+    const { disable } = useOutletContext();
 
     useEffect(() => {
     const getBlog = async () => {
@@ -69,7 +70,7 @@ const Blogpost = () => {
                 <h2>Comments:</h2>
                 <form action="" className="newComment">
                     <div>
-                        <textarea name="newComment" id="newComment" value={newComment} onChange={handleNewComment}>{newComment}</textarea>
+                        <textarea name="newComment" id="newComment" value={newComment} onChange={handleNewComment} disabled={disable}>{newComment}</textarea>
                     </div>
                     <button onClick={handleSubmitComment}>Submit</button>
                 </form>
