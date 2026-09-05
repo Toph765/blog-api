@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useOutletContext } from "react-router";
 import axios from "axios";
 import setAuthHeader from "../../utils/auth";
 
 const LogIn = () => {
     const [error, setError] = useState("");
     const [credentials, setCredentials] = useState({});
+    const { handleSetUser, handleSetHide, handleSetDisable } = useOutletContext();
 
     const navigate = useNavigate();
 
@@ -29,7 +30,10 @@ const LogIn = () => {
                 console.log(response)
                 setAuthHeader(response.data.token);
                 if (response.status === 200) {
-                    navigate("/")
+                    handleSetUser(response.data.payload);
+                    handleSetHide(false);
+                    handleSetDisable(false);
+                    navigate("/");
                 }
 
             }
@@ -53,7 +57,7 @@ const LogIn = () => {
                 <button onClick={handleLoginBtn}>Enter</button>
             </form>
 
-            <Link to={"/"}>Back Home</Link>
+            <Link to={"/"} onClick={() => handleSetHide(false)}>Back Home</Link>
         </>
     )
 }
