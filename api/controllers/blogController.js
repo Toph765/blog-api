@@ -1,11 +1,17 @@
 const prisma = require('../lib/prisma.js');
 
-async function allBlogGet(req, res) {
+async function allPublishedBlogGet(req, res) {
     const posts = await prisma.post.findMany({
         where: {
             published: true,
         }
     });
+
+    return res.json(posts);
+}
+
+async function allBlogsGet(req, res) {
+    const posts = await prisma.post.findMany();
 
     return res.json(posts);
 }
@@ -108,7 +114,8 @@ async function commentDel(req, res) {
 }
 
 module.exports = {
-    allBlogGet,
+    allPublishedBlogGet,
+    allBlogsGet,
     blogGet,
     blogPost, 
     updateBlogPut, 
