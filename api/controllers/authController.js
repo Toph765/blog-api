@@ -12,6 +12,7 @@ async function signUpPost(req, res) {
             email: req.body.email,
             username: req.body.username,
             password: hashedPassword,
+            isAuthor: req.body.isAuthor,
         }
     })
 
@@ -34,7 +35,8 @@ async function logInPost(req, res) {
     const payload = {
         id: user.id,
         email: user.email,
-        username: user.username
+        username: user.username,
+        isAuthor: user.isAuthor
     }
 
     jwt.sign({payload}, process.env.SECRET_KEY, {expiresIn: "1d"}, (err, token) => {
