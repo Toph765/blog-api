@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 
 export const Homepage = () => {
     const [allBlogs, setAllBlogs] = useState([]);
@@ -28,7 +29,7 @@ export const Homepage = () => {
             {allBlogs && allBlogs.map(blog => {
                 return (
                     <div key={blog.id}>
-                        <div>{blog.title}</div>
+                        <Link to={`blogpost/${blog.id}`}>{blog.title ? blog.title : "untitled"}</Link>
                     </div>
                 )
             })}
