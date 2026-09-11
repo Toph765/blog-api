@@ -26,10 +26,13 @@ export const Homepage = () => {
     
     return (
         <>
+            {error && (
+                <div>{error}</div>
+            )}
             {allBlogs && allBlogs.map(blog => {
                 return (
                     <div key={blog.id}>
-                        <Link to={`blogpost/${blog.id}`}>{blog.title ? blog.title : "untitled"}</Link>
+                        <Link to={`/blogpost/${blog.id}`}>{blog.title ? blog.title : "untitled"}</Link>
                     </div>
                 )
             })}
