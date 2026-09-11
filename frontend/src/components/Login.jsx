@@ -26,10 +26,11 @@ const LogIn = () => {
                     password: credentials.password
                 })
 
-                localStorage.setItem("jwt", response.data.token);
                 console.log(response)
-                setAuthHeader(response.data.token);
                 if (response.status === 200) {
+                    localStorage.setItem("jwt", response.data.token);
+                    localStorage.setItem("user", JSON.stringify(response.data.payload));
+                    setAuthHeader(response.data.token);
                     handleSetUser(response.data.payload);
                     handleSetHide(false);
                     handleSetDisable(false);
