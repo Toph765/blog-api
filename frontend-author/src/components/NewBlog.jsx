@@ -26,7 +26,8 @@ export const NewBlog  = () => {
                 });
 
                 if (response.status === 200) {
-                    navigate("/");
+                    console.log()
+                    navigate(`/blogpost/${response.data.id}`);
                 }
             } else {
                 setMessage("You can't submit an empty blog");
@@ -45,6 +46,10 @@ export const NewBlog  = () => {
     return (
         <>
             <div>New Blog</div>
+            
+            {error && (
+                <div>{error}</div>
+            )}
 
             {message && (
                 <div>{message}</div>
@@ -78,7 +83,7 @@ export const NewBlog  = () => {
                 />
             </div>
             <button onClick={handleSubmitBtn}>Submit</button>
-            <Link to="/">Back Home</Link>
+            <Link to="/homepage">Back Home</Link>
         </>
     )
 }
