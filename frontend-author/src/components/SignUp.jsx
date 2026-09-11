@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { useNavigate, Link, useOutletContext } from "react-router";
 import axios from "axios";
 
 export const SignUp = () => {
     const [newUser, setNewUser] = useState({});
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const { handleSetHidden } = useOutletContext();
 
     const handleSetNewUser = (e) => {
         setNewUser({
@@ -26,7 +27,8 @@ export const SignUp = () => {
             })
 
             if (response.data.response === "success") {
-                navigate("/log-in")
+                handleSetHidden(false);
+                navigate("/log-in");
             }
         }
         catch (error) {
@@ -36,6 +38,10 @@ export const SignUp = () => {
     
     return (
         <>
+            {error && (
+                <div>{error}</div>
+            )}
+            
             <form action="">
                 <div>
                     <label htmlFor="newEmail">Email: </label>
@@ -55,7 +61,7 @@ export const SignUp = () => {
                 </div>
                 <button onClick={handleSignUpbtn}>Create Account</button>
             </form>  
-            <Link to="/">Back Home</Link>
+            <Link to="/log-in">Log In</Link>
         </>
     )
 }
