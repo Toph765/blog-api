@@ -72,7 +72,7 @@ const Blogpost = () => {
                     <div>
                         <textarea name="newComment" id="newComment" value={newComment} onChange={handleNewComment} disabled={disable}>{newComment}</textarea>
                     </div>
-                    <button onClick={handleSubmitComment}>Submit</button>
+                    <button onClick={handleSubmitComment} disabled={disable}>Submit</button>
                 </form>
                 {comments && comments.map(comment => {
                     return (
