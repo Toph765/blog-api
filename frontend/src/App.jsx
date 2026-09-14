@@ -59,7 +59,7 @@ const handleLogOutBtn = ()  => {
               </>
             )}
         </nav>
-        <Outlet context={{handleSetHide, handleSetUser, handleSetDisable, disable}}/>
+        <Outlet context={{handleSetHide, handleSetUser, handleSetDisable, disable, user}}/>
       </div>
     </>
   )
