@@ -10,6 +10,7 @@ const SignUp = () => {
     const [error, setError] = useState(null);
     const { handleSetHide } = useOutletContext();
     const navigate = useNavigate();
+    const url = import.meta.env.VITE_API_URL;
 
     const handleSetEmail = (e) => {
         setEmail(e.target.value);
@@ -31,7 +32,7 @@ const SignUp = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:3000/auth/sign-up", {
+            const response = await axios.post(`${url}auth/sign-up`, {
                 email: email,
                 username: username,
                 password: password
@@ -51,6 +52,9 @@ const SignUp = () => {
 
     return (
         <>
+            {error  && (
+                <div>{error}</div>
+            )}
             <form action="">
                 <div>
                     <label htmlFor="newEmail">Email: </label>
