@@ -7,6 +7,7 @@ const LogIn = () => {
     const [error, setError] = useState("");
     const [credentials, setCredentials] = useState({});
     const { handleSetUser, handleSetHide, handleSetDisable } = useOutletContext();
+    const url = import.meta.env.VITE_API_URL;
 
     const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const LogIn = () => {
             e.preventDefault();
 
             try {
-                const response = await axios.post("http://localhost:3000/auth/log-in",{
+                const response = await axios.post(`${url}auth/log-in`,{
                     email: credentials.email,
                     password: credentials.password
                 })
@@ -46,6 +47,9 @@ const LogIn = () => {
 
     return (
         <>
+            {error && (
+                <div>{error}</div>
+            )}
             <form action="">
                 <div>
                     <label htmlFor="email">Email: </label>
