@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router";
+import { useParams, Link, useNavigate, useOutletContext } from "react-router";
 import axios from "axios";
 
 export const Blogpost = () => {
@@ -7,12 +7,20 @@ export const Blogpost = () => {
     const [error, setError] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useOutletContext();
+    const url = import.meta.env.VITE_API_URL;
+
+    useEffect(() => {
+        if (Object.keys(user).length === 0) {
+            navigate("/")
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         const getBlog = async () => {
             try {
                 console.log(id)
-                const response = await axios.get(`http://localhost:3000/posts/${parseInt(id)}`);
+                const response = await axios.get(`${url}posts/${parseInt(id)}`);
                 console.log(response.data)
                 setBlog(response.data);
             }
@@ -22,7 +30,7 @@ export const Blogpost = () => {
         }
 
         getBlog()
-    }, [id])
+    }, [id, url]);
 
     const handleEditNavBtn = () => {
         navigate(`/update/${parseInt(id)}`);
@@ -33,13 +41,13 @@ export const Blogpost = () => {
 
         try {
             if (blog.published === true) {
-                await axios.put(`http://localhost:3000/posts/${parseInt(id)}`, {published: false});
+                await axios.put(`${url}posts/${parseInt(id)}`, {published: false});
                 setBlog(prevBlog => ({
                     ...prevBlog,
                     published: false
                 }))
             } else {
-                await axios.put(`http://localhost:3000/posts/${parseInt(id)}`, {published: true});
+                await axios.put(`${url}posts/${parseInt(id)}`, {published: true});
                 setBlog(prevBlog => ({
                     ...prevBlog,
                     published: true
@@ -53,7 +61,7 @@ export const Blogpost = () => {
 
     const handleDelBtn = async () => {
         try {
-            await axios.delete(`http://localhost:3000/posts/${parseInt(id)}`);
+            await axios.delete(`${url}posts/${parseInt(id)}`);
 
             navigate("/");
         }
@@ -70,6 +78,8 @@ export const Blogpost = () => {
             {blog && (
             <div>
                 <h2>{blog.title}</h2>
+                <div>{blog.author}</div>
+                <div>{blog.time}</div>
                 <div>{blog.content}</div>
                 <div>
                     <button onClick={handleEditNavBtn}>edit</button>
