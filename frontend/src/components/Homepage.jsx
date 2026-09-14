@@ -4,11 +4,12 @@ import { Link } from "react-router";
 const Homepage = () => {
     const [blogs, setBlogs] = useState(null);
     const [error, setError] = useState(null);
+    const url = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const getBlogs = async () => {
             try {
-                const response = await fetch('http://localhost:3000/posts/published');
+                const response = await fetch(`${url}posts/published`);
                 const src = await response.json();
                 
                 setBlogs(src);
@@ -20,7 +21,7 @@ const Homepage = () => {
         }
 
         getBlogs();
-    }, [])
+    }, [url])
 
     return (
         <>
@@ -36,6 +37,7 @@ const Homepage = () => {
                         return (
                             <div key={blog.id}>
                                 <Link to={`blogposts/${blog.id}`}>{blog.title}</Link>
+                                <div>{blog.time}</div>
                             </div>
                         )
                     })}
