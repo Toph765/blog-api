@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { useRef, useState, useEffect } from "react";
+import { useNavigate, Link, useOutletContext } from "react-router";
 import { Editor } from "@tinymce/tinymce-react"; 
 import axios from "axios";
 
@@ -9,6 +9,14 @@ export const NewBlog  = () => {
     const [message, setMessage] = useState("");
     const editorRef = useRef(null);
     const navigate = useNavigate();
+    const { user } = useOutletContext();
+    const url = import.meta.env.VITE_API_URL;
+
+    useEffect(()=> {
+        if (!user || Object.keys(user).length < 0) {
+            navigate("/");
+        }
+    }, [user, navigate]);
 
     const handleSetTitle = (e) => {
         setTitle(e.target.value);
@@ -19,7 +27,7 @@ export const NewBlog  = () => {
             const  content = editorRef.current.getContent({format: "text"});
             
             if (content.length > 0 && title) {
-                const response = await axios.post("http://localhost:3000/posts", {
+                const response = await axios.post(`${url}posts`, {
                 title: title,
                 content: editorRef.current.getContent({format: "text"}),
                 published: false

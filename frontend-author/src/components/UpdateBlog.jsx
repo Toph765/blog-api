@@ -1,7 +1,7 @@
 import { useState, useEffect,useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useOutletContext } from "react-router";
 
 export const UpdateBlog = () => {
     const [blog, setBlog] = useState(null);
@@ -10,11 +10,19 @@ export const UpdateBlog = () => {
     const editorRef = useRef(null);
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useOutletContext();
+    const url = import.meta.env.VITE_API_URL;
+
+    useEffect(()=> {
+        if (!user || Object.keys(user).length < 0) {
+            navigate("/");
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         const grabBlog = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/posts/${parseInt(id)}`);
+                const response = await axios.get(`${url}posts/${parseInt(id)}`);
                 setBlog(response.data.content);
                 setTitle(response.data.title);
                 console.log(response);
@@ -25,7 +33,7 @@ export const UpdateBlog = () => {
         }
 
         grabBlog()
-    }, [id]);
+    }, [id, url]);
 
     const handleTitleChange  = (e) => {
         setTitle(e.target.value);
@@ -33,7 +41,7 @@ export const UpdateBlog = () => {
 
     const handleUpdateBtn = async () => {
         try {
-            const response = await axios.put(`http://localhost:3000/posts/${parseInt(id)}`, {
+            const response = await axios.put(`${url}posts/${parseInt(id)}`, {
                 title: title,
                 content: editorRef.current.getContent({format: "text"}),
             })
