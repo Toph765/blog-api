@@ -9,6 +9,7 @@ export const LogIn = () => {
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
     const {handleSetUser, handleSetHidden} = useOutletContext();
+    const url = import.meta.env.VITE_API_URL;
 
     const handleSetCrendetials = (e) => {
         setCredentials({
@@ -21,7 +22,7 @@ export const LogIn = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:3000/auth/log-in", {
+            const response = await axios.post(`${url}auth/log-in`, {
                 email: credentials.email,
                 password: credentials.password
             });
