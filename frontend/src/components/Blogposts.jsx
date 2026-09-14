@@ -3,23 +3,25 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Blogpost = () => {
-    const [blog, setBlog] = useState(null);
+    const [blog, setBlog] = useState({});
     const [comments, setComments] = useState(null);
     const [newComment, setNewComment] = useState("");
     const [error, setError] = useState(null);
     const { id } = useParams();
-    const { disable } = useOutletContext();
+    const { disable, user } = useOutletContext();
+    const url = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
     const getBlog = async () => {
         try {
             const blogId = parseInt(id);
-            const response = await fetch(`http://localhost:3000/posts/${blogId}`);
+            const response = await fetch(`${url}posts/${blogId}`);
             const blog = await response.json(response);
 
-            const commentRes = await fetch(`http://localhost:3000/posts/${blogId}/comments`);
+            const commentRes = await fetch(`${url}posts/${blogId}/comments`);
             const comments = await commentRes.json(commentRes)
-            setBlog(blog.content);
+            setBlog(blog);
+            console.log(comments)
             setComments(comments);
         }
         catch (error) {
@@ -28,7 +30,7 @@ const Blogpost = () => {
     };
 
     getBlog();
-    }, [id]);
+    }, [id, url]);
 
     const handleNewComment = (e) => {
         setNewComment(e.target.value);
@@ -39,7 +41,7 @@ const Blogpost = () => {
         const blogId = parseInt(id);
 
         try {
-            const response = await axios.post(`http://localhost:3000/posts/${blogId}`, {
+            const response = await axios.post(`{url}posts/${blogId}`, {
                 content: newComment,
             })
 
@@ -54,6 +56,15 @@ const Blogpost = () => {
         }
     }
 
+    const handleDelCommentBtn = async (commentId) => {
+        const updatedComments = comments.filter(comment => comment.id !== commentId);
+        const blogId = parseInt(id)
+
+        await axios.delete(`${url}posts/${blogId}/comments/${commentId}/delete`);
+
+        setComments(updatedComments);
+    }
+
     return (
         <>
             <div>
@@ -62,8 +73,13 @@ const Blogpost = () => {
                 )}
             </div>
             <div>
-                {blog && (
-                    <p>{blog}</p>
+                {Object.keys(blog).length > 0 && (
+                    <>
+                        <h2>{blog.title}</h2>
+                        <div>{blog.author}</div>
+                        <div>{blog.time}</div>
+                        <p>{blog.content}</p>
+                    </>
                 )}
             </div>
             <div>
@@ -80,6 +96,9 @@ const Blogpost = () => {
                         <p>{comment.author}</p>
                         <p>{comment.time}</p>
                         <p>{comment.content}</p>
+                        {(comment.userId === user.id) && (
+                            <button onClick={() => handleDelCommentBtn(comment.id)}>Delete</button>
+                        )}
                     </div>
                     )
                 })}
