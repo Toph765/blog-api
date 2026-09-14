@@ -7,6 +7,7 @@ export const SignUp = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { handleSetHidden } = useOutletContext();
+    const url = import.meta.env.VITE_API_URL;
 
     const handleSetNewUser = (e) => {
         setNewUser({
@@ -19,7 +20,7 @@ export const SignUp = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:3000/auth/sign-up", {
+            const response = await axios.post(`${url}auth/sign-up`, {
                 email: newUser.newEmail,
                 username: newUser.newUsername,
                 password: newUser.newPassword,
