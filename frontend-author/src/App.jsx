@@ -6,7 +6,7 @@ import './App.css'
 function App() {
   const [hidden, setHidden] = useState(() => {
     const user = localStorage.getItem("user-author");
-    return user ? false : true;
+    return ((user && Object.keys(user).length < 0) || !user) ? true : false;
   });
 
   const [user, setUser] = useState(() => {
@@ -23,12 +23,12 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("jwt-author");
 
-    localStorage.setItem("user-author", JSON.stringify(user));
+   // localStorage.setItem("user-author", JSON.stringify(user));
 
     if (token) {
       setAuthHeader(token);
     };
-  },[user])
+  },[])
 
   useEffect(() => {
     const handleNavigation = () => {
@@ -82,7 +82,7 @@ function App() {
       </div>
     </nav>
 
-      <Outlet context={{handleSetUser, handleSetHidden}}/>
+      <Outlet context={{handleSetUser, handleSetHidden, user}}/>
     </>
   )
 }
