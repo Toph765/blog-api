@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useOutletContext, useNavigate } from "react-router";
+import { format } from "date-fns";
 
 export const Homepage = () => {
     const [allBlogs, setAllBlogs] = useState([]);
@@ -40,7 +41,7 @@ export const Homepage = () => {
                 return (
                     <div key={blog.id}>
                         <Link to={`/blogpost/${blog.id}`}>{blog.title ? blog.title : "untitled"}</Link>
-                        <div>{blog.time}</div>
+                        <div>{format(blog.time, "eee PP")}</div>
                     </div>
                 )
             })}

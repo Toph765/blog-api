@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate, useOutletContext } from "react-router";
 import axios from "axios";
+import { format } from "date-fns";
 
 export const Blogpost = () => {
     const [blog, setBlog] = useState({});
@@ -21,7 +22,7 @@ export const Blogpost = () => {
             try {
                 console.log(id)
                 const response = await axios.get(`${url}posts/${parseInt(id)}`);
-                console.log(response.data)
+                console.log(format(response.data.time, "eee PP"))
                 setBlog(response.data);
             }
             catch (error) {
@@ -75,14 +76,15 @@ export const Blogpost = () => {
             {error && (
                 <div>{error}</div>
             )}
-            {blog && (
+            {Object.keys(blog).length > 0 && (
             <div>
                 <h2>{blog.title}</h2>
                 <div>{blog.author}</div>
-                <div>{blog.time}</div>
+                <div>{format(blog.time, "eee PP")}</div>
                 <div>{blog.content}</div>
                 <div>
                     <button onClick={handleEditNavBtn}>edit</button>
+
                     {blog.published ? (
                         <button onClick={handlePublishBtn}>Unpublish</button>
                     ): (

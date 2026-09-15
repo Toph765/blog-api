@@ -1,6 +1,7 @@
 import { useParams, Link, useOutletContext } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { format } from "date-fns";
 
 const Blogpost = () => {
     const [blog, setBlog] = useState({});
@@ -77,7 +78,7 @@ const Blogpost = () => {
                     <>
                         <h2>{blog.title}</h2>
                         <div>{blog.author}</div>
-                        <div>{blog.time}</div>
+                        <div>{format(blog.time, "eee PP")}</div>
                         <p>{blog.content}</p>
                     </>
                 )}
@@ -94,7 +95,7 @@ const Blogpost = () => {
                     return (
                     <div key={comment.id}>
                         <p>{comment.author}</p>
-                        <p>{comment.time}</p>
+                        <p>{format(comment.time, "eee PP")}</p>
                         <p>{comment.content}</p>
                         {(comment.userId === user.id) && (
                             <button onClick={() => handleDelCommentBtn(comment.id)}>Delete</button>
