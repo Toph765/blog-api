@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router'
 import { useState, useEffect } from 'react'
 import { setAuthHeader } from '../utils/auth';
-import './App.css'
+import styles from './App.module.css';
 
 function App() {
   const [hidden, setHidden] = useState(() => {
@@ -32,10 +32,8 @@ function App() {
 
   useEffect(() => {
     const handleNavigation = () => {
-      if (Object.keys(user).length > 0) {
-        navigate("/homepage")
-      } else {
-        navigate("log-in");
+      if (Object.keys(user).length === 0) {
+        navigate("/log-in");
       }
     }
 
@@ -64,25 +62,32 @@ function App() {
 
   return (
     <>
-    <nav hidden={hidden}>
-      <h1>Main page</h1>
-      
-      {user && (
-        Object.keys(user).length > 0 && (
-          <>
-            <div>{user.username}</div>
-            <button onClick={handleLogOut}>Log Out</button>
-          </>
+      <div className={styles.container}>
+        {!hidden && (
+          <nav  className={styles.nav}>
+            <h1>Random Blog - Authors' Hub</h1>
             
-      )
-      )}
+            {user && (
+              Object.keys(user).length > 0 && (
+                <div>
+                  <div className={styles.username}>{user.username}</div>
+                  <button onClick={handleNewBlogNav}>Create New Blog!</button>
+                  <button onClick={handleLogOut}>Log Out</button>
+                </div>
+            )
+            )}
+          </nav>
+        )}
+        
+        <div className={styles.main}>
+          <Outlet context={{handleSetUser, handleSetHidden, user}}/>
+        </div>
 
-      <div>
-        <button onClick={handleNewBlogNav}>Create New Blog!</button>
+        <div className={styles.footer}>
+          <div>An Exercise for The Odin Project</div>
+        </div>
+        
       </div>
-    </nav>
-
-      <Outlet context={{handleSetUser, handleSetHidden, user}}/>
     </>
   )
 }
