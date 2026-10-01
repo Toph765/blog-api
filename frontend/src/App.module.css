@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --font: "Roboto", sans-serif;
+    --bgc-one: #2373F4;
+    --bgc-two: #F2EFE7;
+    --border-color: #D8C9A8;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100dvh;
+    font-family: var(--font);
+    font-size: 16px;
+    background-color: whitesmoke;
+}
+
+/* General */
+
+input, textarea {
+    border: 2px solid black;
+    flex: 1;
+    height: 1.8rem;
+    padding: 0 0.4rem;
+
+    resize: none;
+}
+
+button {
+    border: 2px solid black;
+    background: var(--border-color);
+    padding: 0.4rem;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #d4cec1;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.link :hover {
+    text-decoration: underline;
+}
+
+.link > div:hover {
+    text-decoration: none;
+}
+
+/* forms */
+
+.formContainer {
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 32rem;
+    margin: 1.2rem 0;
+    padding: 1.2rem;
+
+    border: 2px solid var(--border-color);
+    border-radius: 1.2rem;
+}
+
+.form > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    flex: 1;
+    text-align: start;
+    margin: 0 0.2rem;
+}
+
+/* Homepage */
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem;
+
+    background-color: var(--bgc-one);
+    border-radius: 0 0 1.2rem 1.2rem;
+}
+
+.nav  div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.username {
+    font-size: 1.4rem;
+}
+
+.main {
+    padding: 1.2rem 2.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+
+    background-color: var(--bgc-two);
+    border-radius: 1.2rem 1.2rem 0 0;
+}
+
+.blogsContainer {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
+.blogsList {
+    display: flex;
+    border: 2px solid var(--border-color);
+    flex-direction: column;
+    padding: 1.2rem;
+}
+
+.blogItems{
+ margin-top: 0.8rem;
+ border: 2px solid var(--border-color);
+ padding: 0.6rem;
+}
+
+.blogDetails {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.2rem;
+    color: #555555;
+} 
+
+/* Blogpost */
+
+.blogSection {
+    text-align: justify;
+    width: 100%;
+    max-width: 60rem;
+    flex: 1;
+    padding: 1.2rem;
+
+    border: 2px solid var(--border-color);
+    background-color: rgba(245, 245, 245, 0.603);
+    border-radius: 1.2rem;
+}
+
+.blogSection > h2 {
+    font-size: 2.2rem;
+}
+
+.authorTime {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+    color: #555555;
+}
+
+.blogSection > p {
+    margin-top: 2rem;
+    text-align: justify;
+    font-size: 1.4rem;
+}
+
+.commentSection {
+    border: 2px solid wheat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    max-width: 40rem;
+    margin-top: 1.2rem;
+    padding: 1.2rem;
+
+    border: 2px solid var(--border-color);
+    border-radius: 1.2rem;
+}
+
+.commentForm {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    margin-bottom: 1.2rem;
+}
+
+.commentForm > div > textarea {
+    width: 100%;
+    min-height: 6rem;
+}
+
+.commentForm > :last-child {
+    align-self: flex-end;
+}
+
+.commentsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    align-self: stretch;
+    margin: 1.2rem 0;
+}
+
+.commentDetails {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commentContent {
+    color: #555555;
+}
+
+.noComment {
+    text-align: center;
+    color: #555555;
+    font-style: italic;
+}
+
+.footer {
+    border-top: 2px  solid var(--border-color);
+    padding-top: 2.4rem;
+    flex-shrink: 0;
+
+    background-color: var(--bgc-two);
+    border-radius: 0 0 1.2rem 1.2rem;
+    padding: 1.2rem;
+    color: #555555;
+}
