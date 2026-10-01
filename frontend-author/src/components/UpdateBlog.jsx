@@ -2,6 +2,7 @@ import { useState, useEffect,useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import axios from "axios";
 import { useParams, useNavigate, useOutletContext } from "react-router";
+import styles from "../App.module.css";
 
 export const UpdateBlog = () => {
     const [blog, setBlog] = useState(null);
@@ -28,7 +29,7 @@ export const UpdateBlog = () => {
                 console.log(response);
             }
             catch (error) {
-                setError(error);
+                setError(error.message);
             }
         }
 
@@ -52,7 +53,7 @@ export const UpdateBlog = () => {
             }
         }
         catch (error) {
-            setError(error);
+            setError(error.message);
         }
     }
 
@@ -62,40 +63,43 @@ export const UpdateBlog = () => {
 
     return (
         <>
-            <h2>Update Blog</h2>
+            <div className={styles.updateBlog}>
+                <h2>Update Blog</h2>
 
-            {error && (
-                <div>{error}</div>
-            )}
+                {error && (
+                    <div>{error}</div>
+                )}
 
-            <form action="">
-                <div>
-                    <label htmlFor="updatedTitle">Title: </label>
-                    <input type="text" name="updateTitle" id="updatedTitle" onChange={handleTitleChange} value={title} required/>
+                <form>
+                    <div>
+                        <label htmlFor="updatedTitle">Title: </label>
+                        <input type="text" name="updateTitle" id="updatedTitle" onChange={handleTitleChange} value={title} required/>
+                    </div>
+                </form>
+                <Editor
+                    apiKey='8eiphr96pnbrf11kcbo70jia5qyh4vc78ukk30cdpl4bzfl0'
+                    initialValue={`<p>${blog}</p>`}
+                    onInit={(evt, editor) => editorRef.current = editor}
+                    init={{
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                    ],
+                    toolbar: 'undo redo | blocks | ' +
+                        'bold italic forecolor | alignleft aligncenter ' +
+                        'alignright alignjustify | bullist numlist outdent indent | ' +
+                        'removeformat | help',
+                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                    }}
+                />
+                <div className={styles.btnsContainer}>
+                    <button onClick={handleUpdateBtn}>Update Blog</button>
+                    <button onClick={handleCancelBtn}>Cancel</button>
                 </div>
-            </form>
-            <Editor
-                apiKey='8eiphr96pnbrf11kcbo70jia5qyh4vc78ukk30cdpl4bzfl0'
-                initialValue={`<p>${blog}</p>`}
-                onInit={(evt, editor) => editorRef.current = editor}
-                init={{
-                height: 500,
-                menubar: false,
-                plugins: [
-                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                ],
-                toolbar: 'undo redo | blocks | ' +
-                    'bold italic forecolor | alignleft aligncenter ' +
-                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                    'removeformat | help',
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                }}
-            />
-
-            <button onClick={handleUpdateBtn}>Update Blog</button>
-            <button onClick={handleCancelBtn}>Cancel</button>
+            </div>
         </>
     )
 }

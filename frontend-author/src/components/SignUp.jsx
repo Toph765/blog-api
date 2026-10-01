@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link, useOutletContext } from "react-router";
 import axios from "axios";
+import styles from "../App.module.css";
 
 export const SignUp = () => {
     const [newUser, setNewUser] = useState({});
@@ -33,7 +34,7 @@ export const SignUp = () => {
             }
         }
         catch (error) {
-            setError(error);
+            setError(error.message);
         }
     }
     
@@ -42,27 +43,33 @@ export const SignUp = () => {
             {error && (
                 <div>{error}</div>
             )}
-            
-            <form action="">
-                <div>
-                    <label htmlFor="newEmail">Email: </label>
-                    <input type="email" name="newEmail" id="newEmail"  onChange={handleSetNewUser} required/>
-                </div>
-                <div>
-                    <label htmlFor="newUsername">Username: </label>
-                    <input type="text" name="newUsername" id="newUsername" onChange={handleSetNewUser} required/>
-                </div>
-                <div>
-                    <label htmlFor="newPassword">Password: </label>
-                    <input type="password" name="newPassword" id="newPassword" onChange={handleSetNewUser} required/>
-                </div>
-                <div>
-                    <label htmlFor="rePassword">Re-enter Password: </label>
-                    <input type="password" name="rePassword" id="rePassword" onChange={handleSetNewUser} required/>
-                </div>
-                <button onClick={handleSignUpbtn}>Create Account</button>
-            </form>  
-            <Link to="/log-in">Log In</Link>
+
+            <div className={styles.formContainer}>
+                <h2>Sign Up</h2>
+                
+                <form className={styles.form}>
+                    <div>
+                        <label htmlFor="newEmail">Email: </label>
+                        <input type="email" name="newEmail" id="newEmail"  onChange={handleSetNewUser} required/>
+                    </div>
+                    <div>
+                        <label htmlFor="newUsername">Username: </label>
+                        <input type="text" name="newUsername" id="newUsername" onChange={handleSetNewUser} required/>
+                    </div>
+                    <div>
+                        <label htmlFor="newPassword">Password: </label>
+                        <input type="password" name="newPassword" id="newPassword" onChange={handleSetNewUser} required/>
+                    </div>
+                    <div>
+                        <label htmlFor="rePassword">Re-enter Password: </label>
+                        <input type="password" name="rePassword" id="rePassword" onChange={handleSetNewUser} required/>
+                    </div>
+                    <div>
+                        <button onClick={handleSignUpbtn}>Create Account</button>
+                    </div>
+                </form>  
+                <Link className={styles.link} to="/log-in"><span>Log In</span></Link>
+            </div>
         </>
     )
 }

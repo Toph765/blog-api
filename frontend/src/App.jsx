@@ -1,17 +1,29 @@
-import { Outlet, Link, useNavigate } from "react-router";
+import { Outlet, Link, useNavigate, useLocation } from "react-router";
 import { useState,  useEffect } from "react";
 import setAuthHeader from "../utils/auth";
+import styles from "./App.module.css";
 
 const App = () => {
-const [hide, setHide] = useState(false);
+const navigate = useNavigate();
+const location = useLocation();
+
+const [hide, setHide] = useState(() => {
+  if (location.pathname === "/log-in" || location.pathname == "/sign-up") {
+    return true;
+  } else return false;
+});
 
 const [user, setUser] = useState(() => {
   const user = localStorage.getItem("user");
   return user ? JSON.parse(user) : {}; 
 });
 
-const [disable, setDisable] = useState(true);
-const navigate = useNavigate();
+const [disable, setDisable] = useState(() => {
+  const user = localStorage.getItem("user");
+  if (user && Object.keys(user).length > 0) {
+    return false;
+  } else return true;
+});
 
 useEffect(() => {
   const token = localStorage.getItem("jwt");
@@ -44,22 +56,32 @@ const handleLogOutBtn = ()  => {
 
   return (
     <>
-      <div>
-          <nav hidden={hide}>
-              <h1>Welcome to the main page!</h1>
+      <div className={styles.container}>
+
+        {!hide && (
+          <nav className={styles.nav}>
+              <h1>Random Blog</h1>
             {Object.keys(user).length > 0 ? (
-              <>
-                <div>{user.username}</div>
+              <div>
+                <div className={styles.username}>{user.username}</div>
                 <button onClick={handleLogOutBtn}>Log Out</button>
-              </>
+              </div>
             ) : (
-              <>
-                <Link to="log-in" onClick={() => handleSetHide(true)}>Log In</Link>
-                <Link to="sign-up" onClick={() => handleSetHide(true)}>Sign Up</Link>
-              </>
+              <div>
+                <Link to="log-in" className={styles.link} onClick={() => handleSetHide(true)}><span> Log In</span></Link>
+                <Link to="sign-up" className={styles.link} onClick={() => handleSetHide(true)}><span>Sign Up</span></Link>
+              </div>
             )}
-        </nav>
-        <Outlet context={{handleSetHide, handleSetUser, handleSetDisable, disable, user}}/>
+          </nav>
+        )}
+          
+        <div className={styles.main}>
+          <Outlet context={{handleSetHide, handleSetUser, handleSetDisable, disable, user}}/>
+        </div>
+
+        <div className={styles.footer}>
+          <div>A The Odin Project Exercise</div>
+        </div>
       </div>
     </>
   )

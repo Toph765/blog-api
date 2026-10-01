@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router";
 import axios from "axios";
 import { setAuthHeader } from "../../utils/auth";
+import styles from "../App.module.css";
 
 export const LogIn = () => {
     const [credentials, setCredentials] = useState({});
@@ -22,6 +23,7 @@ export const LogIn = () => {
         e.preventDefault();
 
         try {
+            console.log("blah")
             const response = await axios.post(`${url}auth/log-in`, {
                 email: credentials.email,
                 password: credentials.password
@@ -40,7 +42,7 @@ export const LogIn = () => {
             }
         }
         catch (error) {
-            setError(error);
+            setError(error.message);
         }
     }
     
@@ -53,18 +55,24 @@ export const LogIn = () => {
             {message && (
                 <div>{message}</div>
             )}
-                <form action="">
-                    <div>
-                        <label htmlFor="email">Email: </label>
-                        <input type="email" name="email" id="email" onChange={handleSetCrendetials} required/>
-                    </div>
-                    <div>
-                        <label htmlFor="password">Password: </label>
-                        <input type="password" name="password" id="password" onChange={handleSetCrendetials} required/>
-                    </div>
-                    <button onClick={handleLoginBtn}>Enter</button>
-                </form>
-                <Link to="/sign-up">Sign Up</Link>
+                <div className={styles.formContainer}>
+                    <h2>Log In</h2>
+
+                    <form  className={styles.form}>
+                        <div>
+                            <label htmlFor="email">Email: </label>
+                            <input type="email" name="email" id="email" onChange={handleSetCrendetials} required/>
+                        </div>
+                        <div>
+                            <label htmlFor="password">Password: </label>
+                            <input type="password" name="password" id="password" onChange={handleSetCrendetials} required/>
+                        </div>
+                        <div>
+                            <button onClick={handleLoginBtn}>Enter</button>
+                        </div>
+                    </form>
+                    <Link className={styles.link} to="/sign-up"><span>Sign Up</span></Link>
+                </div>
             </>
     )
 }

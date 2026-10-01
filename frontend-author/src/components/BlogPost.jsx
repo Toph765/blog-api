@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate, useOutletContext } from "react-router";
 import axios from "axios";
 import { format } from "date-fns";
+import styles from "../App.module.css";
 
 export const Blogpost = () => {
     const [blog, setBlog] = useState({});
@@ -26,7 +27,7 @@ export const Blogpost = () => {
                 setBlog(response.data);
             }
             catch (error) {
-                setError(error);
+                setError(error.message);
             }
         }
 
@@ -56,7 +57,7 @@ export const Blogpost = () => {
             }
         }
         catch (error) {
-            setError(error);
+            setError(error.message);
         }
     }
 
@@ -67,7 +68,7 @@ export const Blogpost = () => {
             navigate("/");
         }
         catch (error) {
-            setError(error);
+            setError(error.message);
         }
     }
 
@@ -77,25 +78,30 @@ export const Blogpost = () => {
                 <div>{error}</div>
             )}
             {Object.keys(blog).length > 0 && (
-            <div>
-                <h2>{blog.title}</h2>
-                <div>{blog.author}</div>
-                <div>{format(blog.time, "eee PP")}</div>
-                <div>{blog.content}</div>
-                <div>
-                    <button onClick={handleEditNavBtn}>edit</button>
+                <>
+                    <div className={styles.btnsContainer}>
+                        <button onClick={handleEditNavBtn}>edit</button>
+                        {blog.published ? (
+                            <button onClick={handlePublishBtn}>Unpublish</button>
+                        ): (
+                            <button onClick={handlePublishBtn}>Publish</button>
+                        )}
+                        <button onClick={handleDelBtn}>Delete</button>
+                    </div>
 
-                    {blog.published ? (
-                        <button onClick={handlePublishBtn}>Unpublish</button>
-                    ): (
-                        <button onClick={handlePublishBtn}>Publish</button>
-                    )}
-                    <button onClick={handleDelBtn}>Delete</button>
-                </div>
-            </div>
+                    <div className={styles.blogSection}>
+                        <h2>{blog.title}</h2>
+                        <div className={styles.authorTime}>
+                            <div>{blog.author}</div>
+                            <div>{format(blog.time, "eee PP")}</div>
+                        </div>
+                        <p>{blog.content}</p>
+                        
+                    </div>
+                </>
 
             )}
-            <Link to="/homepage">Back Home</Link>
+            <Link className={styles.link} to="/homepage"><span>Back Home</span></Link>
         </>
     )
 

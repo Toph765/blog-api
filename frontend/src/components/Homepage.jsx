@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { format } from "date-fns";
+import styles from "../App.module.css";
 
 const Homepage = () => {
     const [blogs, setBlogs] = useState(null);
@@ -26,19 +27,25 @@ const Homepage = () => {
 
     return (
         <>
-            <div>
-                <h2>This is Home Page!</h2>
+            <div className={styles.blogsContainer}>
                 <div>
                     {error && (
                         <p>{error}</p>
                     )}
                 </div>
-                <div>
+                <h2>Posts</h2>
+                <div  className={styles.blogsList}>
                     {blogs && blogs.map(blog => {
                         return (
-                            <div key={blog.id}>
-                                <Link to={`blogposts/${blog.id}`}>{blog.title}</Link>
-                                <div>{format(blog.time, "eee PP")}</div>
+                            <div key={blog.id} className={styles.blogItems}>
+                                <Link to={`blogposts/${blog.id}`} className={styles.link}>
+                                    <h3>{blog.title}</h3>
+                                    <div className={styles.blogDetails}>
+                                        <div>{blog.author}</div>
+                                        <div>{format(blog.time, "eee PP")}</div>
+                                    </div>
+                                </Link>
+                                
                             </div>
                         )
                     })}

@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useNavigate, Link, useOutletContext } from "react-router";
 import { Editor } from "@tinymce/tinymce-react"; 
 import axios from "axios";
+import styles from "../App.module.css";
 
 export const NewBlog  = () => {
     const [error, setError] = useState(null);
@@ -47,51 +48,54 @@ export const NewBlog  = () => {
             
         }
         catch (error) {
-            setError(error)
+            setError(error.message)
         }
     };
 
     return (
         <>
-            <div>New Blog</div>
-            
-            {error && (
-                <div>{error}</div>
-            )}
+            <div className={styles.newBlog}>
+                <h2>New Blog</h2>
+                
+                {error && (
+                    <div>{error}</div>
+                )}
 
-            {message && (
-                <div>{message}</div>
-            )}
+                {message && (
+                    <div>{message}</div>
+                )}
 
-            <form action="">
-            <div>
-                <label htmlFor="newTitle">Title: </label>
-                <input type="text" name="newTitle" id="newTitle" onChange={handleSetTitle} required/>
+                <form>
+                <div>
+                    <label htmlFor="newTitle">Title: </label>
+                    <input type="text" name="newTitle" id="newTitle" onChange={handleSetTitle} required/>
+                </div>
+                </form>
+                <div>
+                    <Editor
+                    apiKey='8eiphr96pnbrf11kcbo70jia5qyh4vc78ukk30cdpl4bzfl0'
+                    onInit={(evt, editor) => editorRef.current = editor}
+                    initialValue="<p>This is the initial content of the editor.</p>"
+                    init={{
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                    ],
+                    toolbar: 'undo redo | blocks | ' +
+                        'bold italic forecolor | alignleft aligncenter ' +
+                        'alignright alignjustify | bullist numlist outdent indent | ' +
+                        'removeformat | help',
+                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                    }}
+                    />
+                </div>
+                <button onClick={handleSubmitBtn}>Submit</button>
+                <Link className={styles.link} to="/homepage"><span>Back Home</span></Link>
+
             </div>
-            </form>
-            <div>
-                <Editor
-                apiKey='8eiphr96pnbrf11kcbo70jia5qyh4vc78ukk30cdpl4bzfl0'
-                onInit={(evt, editor) => editorRef.current = editor}
-                initialValue="<p>This is the initial content of the editor.</p>"
-                init={{
-                height: 500,
-                menubar: false,
-                plugins: [
-                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                ],
-                toolbar: 'undo redo | blocks | ' +
-                    'bold italic forecolor | alignleft aligncenter ' +
-                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                    'removeformat | help',
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                }}
-                />
-            </div>
-            <button onClick={handleSubmitBtn}>Submit</button>
-            <Link to="/homepage">Back Home</Link>
         </>
     )
 }

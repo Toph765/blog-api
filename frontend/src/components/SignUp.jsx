@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router";
 import axios from "axios";
+import styles from "../App.module.css";
 
 const SignUp = () => {
     const [email, setEmail] = useState("");
@@ -42,11 +43,10 @@ const SignUp = () => {
                 navigate("/log-in");
             }
 
-            console.log(response)
         }
 
         catch (error) {
-            setError(error);
+            setError(error.message);
         }
     }
 
@@ -55,27 +55,35 @@ const SignUp = () => {
             {error  && (
                 <div>{error}</div>
             )}
-            <form action="">
-                <div>
-                    <label htmlFor="newEmail">Email: </label>
-                    <input type="email" name="newEmail" id="newEmail" value={email} onChange={handleSetEmail} required/>
-                </div>
-                <div>
-                    <label htmlFor="newUsername">Username: </label>
-                    <input type="text" name="newUsername" id="newUsername" value={username} onChange={handleSetUsername} required/>
-                </div>
-                <div>
-                    <label htmlFor="newPassword">Password: </label>
-                    <input type="password" name="newPassword" id="newPassword" value={password} onChange={handleSetPassword} required/>
-                </div>
-                <div>
-                    <label htmlFor="newRePassword">Re-enter Password: </label>
-                    <input type="password" name="newRePassword" id="newRePassword" value={rePassword} onChange={handleSetRePassword} required/>
-                </div>
 
-                <button onClick={handleSignupBtn}>Create Account</button>
-            </form>
-            <Link to="/" onClick={() => handleSetHide(false)}>Back Home</Link>
+            <div className={styles.formContainer}>
+                <h2>Sign Up</h2>
+
+                <form className={styles.form}>
+                    <div>
+                        <label htmlFor="newEmail">Email: </label>
+                        <input type="email" name="newEmail" id="newEmail" value={email} onChange={handleSetEmail} required/>
+                    </div>
+                    <div>
+                        <label htmlFor="newUsername">Username: </label>
+                        <input type="text" name="newUsername" id="newUsername" value={username} onChange={handleSetUsername} required/>
+                    </div>
+                    <div>
+                        <label htmlFor="newPassword">Password: </label>
+                        <input type="password" name="newPassword" id="newPassword" value={password} onChange={handleSetPassword} required/>
+                    </div>
+                    <div>
+                        <label htmlFor="newRePassword">Re-enter Password: </label>
+                        <input type="password" name="newRePassword" id="newRePassword" value={rePassword} onChange={handleSetRePassword} required/>
+                    </div>
+
+                    <div>
+                        <button onClick={handleSignupBtn}>Create Account</button>
+                    </div>
+                </form>
+                <Link to="/" className={styles.link} onClick={() => handleSetHide(false)}><span>Back Home</span></Link>
+            </div>
+
         </>
     )
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useOutletContext, useNavigate } from "react-router";
 import { format } from "date-fns";
+import  styles from "../App.module.css"
 
 export const Homepage = () => {
     const [allBlogs, setAllBlogs] = useState([]);
@@ -10,7 +11,7 @@ export const Homepage = () => {
     const url = import.meta.env.VITE_API_URL;
 
     useEffect(()=> {
-        if (!user || Object.keys(user).length < 0) {
+        if (!user || Object.keys(user).length === 0) {
             navigate("/");
         }
     }, [user, navigate]);
@@ -24,7 +25,7 @@ export const Homepage = () => {
                 setAllBlogs(result);
             }
             catch (error) {
-                setError(error);
+                setError(error.message);
             }
         }
 
@@ -34,17 +35,21 @@ export const Homepage = () => {
     
     return (
         <>
-            {error && (
-                <div>{error}</div>
-            )}
-            {allBlogs && allBlogs.map(blog => {
-                return (
-                    <div key={blog.id}>
-                        <Link to={`/blogpost/${blog.id}`}>{blog.title ? blog.title : "untitled"}</Link>
-                        <div>{format(blog.time, "eee PP")}</div>
-                    </div>
-                )
-            })}
+            <div className={styles.blogsContainer}>
+                {error && (
+                    <div>{error}</div>
+                )}
+                <div className={styles.blogsList}>
+                    {allBlogs && allBlogs.map(blog => {
+                        return (
+                            <div key={blog.id}>
+                                <Link className={styles.link} to={`/blogpost/${blog.id}`}><span>{blog.title ? blog.title : "untitled"}</span></Link>
+                                <div className={styles.blogDetails}>{format(blog.time, "eee PP")}</div>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
         </>
     )
 }
