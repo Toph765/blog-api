@@ -35,7 +35,6 @@ export const NewBlog  = () => {
                 });
 
                 if (response.status === 200) {
-                    console.log()
                     navigate(`/blogpost/${response.data.id}`);
                 }
             } else {

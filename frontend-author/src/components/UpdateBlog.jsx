@@ -26,7 +26,6 @@ export const UpdateBlog = () => {
                 const response = await axios.get(`${url}posts/${parseInt(id)}`);
                 setBlog(response.data.content);
                 setTitle(response.data.title);
-                console.log(response);
             }
             catch (error) {
                 setError(error.message);
@@ -47,7 +46,6 @@ export const UpdateBlog = () => {
                 content: editorRef.current.getContent({format: "text"}),
             })
 
-            console.log(response)
             if (response.status === 200) {
                 navigate(`/blogpost/${parseInt(id)}`);
             }

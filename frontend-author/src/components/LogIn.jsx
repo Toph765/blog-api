@@ -23,13 +23,11 @@ export const LogIn = () => {
         e.preventDefault();
 
         try {
-            console.log("blah")
             const response = await axios.post(`${url}auth/log-in`, {
                 email: credentials.email,
                 password: credentials.password
             });
 
-            console.log(response)
             if (response.status === 200 && response.data.payload.isAuthor === true) {
                 localStorage.setItem("jwt-author", response.data.token);
                 localStorage.setItem("user-author", JSON.stringify(response.data.payload));

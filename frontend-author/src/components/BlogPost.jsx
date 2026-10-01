@@ -21,9 +21,7 @@ export const Blogpost = () => {
     useEffect(() => {
         const getBlog = async () => {
             try {
-                console.log(id)
                 const response = await axios.get(`${url}posts/${parseInt(id)}`);
-                console.log(format(response.data.time, "eee PP"))
                 setBlog(response.data);
             }
             catch (error) {
