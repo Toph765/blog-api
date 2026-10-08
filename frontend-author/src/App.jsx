@@ -37,6 +37,7 @@ function App() {
       if (Object.keys(user).length === 0) {
         navigate("/");
       } else {
+        console.log("running")
         if (location.pathname === "/") {
           navigate("/homepage");
         } else {
