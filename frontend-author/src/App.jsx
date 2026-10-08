@@ -37,13 +37,17 @@ function App() {
       if (Object.keys(user).length === 0) {
         navigate("/log-in");
       } else {
-        navigate(location.pathname);
+        if (location.pathname === "/") {
+          navigate("/homepage");
+        } else {
+          navigate(location.pathname)
+        }
       }
     }
 
     handleNavigation();
 
-  },[user, navigate]);
+  },[user, navigate, location.pathname]);
 
   const handleSetUser = (user) => {
     setUser(user);
