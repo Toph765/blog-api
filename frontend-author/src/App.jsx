@@ -37,14 +37,11 @@ function App() {
       if (Object.keys(user).length === 0  || !localStorage.getItem("user-author")) {
         console.log("running on log out")
         navigate("/");
-      } else {
+      }/*  else {
         console.log("running")
-        if (location.pathname === "/") {
-          navigate("/homepage");
-        } else {
-          navigate(location.pathname)
-        }
-      }
+        navigate(location.pathname)
+        
+      } */
     }
 
     handleNavigation();
