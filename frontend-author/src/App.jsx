@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router'
+import { Outlet, useNavigate,useLocation } from 'react-router'
 import { useState, useEffect } from 'react'
 import { setAuthHeader } from '../utils/auth';
 import styles from './App.module.css';
@@ -20,11 +20,12 @@ function App() {
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem("jwt-author");
 
-   localStorage.setItem("user-author", JSON.stringify(user));
+   // localStorage.setItem("user-author", JSON.stringify(user));
 
     if (token) {
       setAuthHeader(token);
@@ -36,7 +37,7 @@ function App() {
       if (Object.keys(user).length === 0) {
         navigate("/log-in");
       } else {
-        navigate("/homepage");
+        navigate(location.pathname);
       }
     }
 
