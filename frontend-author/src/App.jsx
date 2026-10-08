@@ -45,7 +45,7 @@ function App() {
 
     handleNavigation();
 
-  },[user]);
+  },[user, navigate, location.pathname]);
 
   const handleSetUser = (user) => {
     setUser(user);
