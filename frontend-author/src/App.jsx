@@ -11,7 +11,6 @@ function App() {
 
   const [user, setUser] = useState(() => {
     const user = localStorage.getItem("user-author");
-    console.log(user)
     if (user) {
       return JSON.parse(user);
     } else  {
@@ -32,17 +31,20 @@ function App() {
     };
   },[])
 
-  /* useEffect(() => {
+  useEffect(() => {
     const handleNavigation = () => {
-      if (Object.keys(user).length === 0  || !localStorage.getItem("user-author")) {
-        console.log("running on log out")
-        navigate("/");
+      if (Object.keys(user).length === 0) {
+        navigate("/log-in");
+      }
+
+      if (location.pathname === "/sign-up") {
+        navigate("/sign-up")
       }
     }
 
     handleNavigation();
 
-  },[user, navigate, location.pathname]); */
+  },[user, navigate, location.pathname]);
 
   const handleSetUser = (user) => {
     setUser(user);
@@ -62,11 +64,6 @@ function App() {
     setHidden(true);
     navigate("/")
   }
-
-  if (Object.keys(user).length === 0  || !localStorage.getItem("user-author")) {
-        console.log("running on log out")
-        navigate("/");
-      }
 
   return (
     <>

@@ -10,7 +10,7 @@ export const routes = [{
     path: "/",
     element: <App />,
     children: [
-        {index: true, element:  <LogIn />},
+        {index: true, element:  <Homepage />},
         {path: "/homepage", element: <Homepage />},
         {path: "/blogpost/:id", element: <Blogpost />},
         {path: "/log-in", element: <LogIn />},
