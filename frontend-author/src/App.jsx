@@ -62,7 +62,7 @@ function App() {
     localStorage.removeItem("jwt-author")
     localStorage.removeItem("user-author");
     setHidden(true);
-    navigate("/")
+    navigate("/log-in")
   }
 
   return (
