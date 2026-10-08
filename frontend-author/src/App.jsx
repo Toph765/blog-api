@@ -35,7 +35,7 @@ function App() {
   useEffect(() => {
     const handleNavigation = () => {
       if (Object.keys(user).length === 0) {
-        navigate("/log-in");
+        navigate("/");
       } else {
         if (location.pathname === "/") {
           navigate("/homepage");
