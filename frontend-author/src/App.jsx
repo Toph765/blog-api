@@ -11,6 +11,7 @@ function App() {
 
   const [user, setUser] = useState(() => {
     const user = localStorage.getItem("user-author");
+    console.log(user)
     if (user) {
       return JSON.parse(user);
     } else  {
@@ -23,7 +24,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("jwt-author");
 
-   // localStorage.setItem("user-author", JSON.stringify(user));
+   localStorage.setItem("user-author", JSON.stringify(user));
 
     if (token) {
       setAuthHeader(token);
