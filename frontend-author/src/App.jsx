@@ -32,7 +32,7 @@ function App() {
     };
   },[])
 
-  useEffect(() => {
+  /* useEffect(() => {
     const handleNavigation = () => {
       if (Object.keys(user).length === 0  || !localStorage.getItem("user-author")) {
         console.log("running on log out")
@@ -42,7 +42,7 @@ function App() {
 
     handleNavigation();
 
-  },[user, navigate, location.pathname]);
+  },[user, navigate, location.pathname]); */
 
   const handleSetUser = (user) => {
     setUser(user);
@@ -62,6 +62,11 @@ function App() {
     setHidden(true);
     navigate("/")
   }
+
+  if (Object.keys(user).length === 0  || !localStorage.getItem("user-author")) {
+        console.log("running on log out")
+        navigate("/");
+      }
 
   return (
     <>
