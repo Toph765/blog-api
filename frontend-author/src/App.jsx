@@ -35,6 +35,8 @@ function App() {
     const handleNavigation = () => {
       if (Object.keys(user).length === 0) {
         navigate("/log-in");
+      } else {
+        navigate("/homepage");
       }
     }
 
