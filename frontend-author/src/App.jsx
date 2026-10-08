@@ -35,6 +35,7 @@ function App() {
   useEffect(() => {
     const handleNavigation = () => {
       if (Object.keys(user).length === 0) {
+        console.log("running on log out")
         navigate("/");
       } else {
         console.log("running")
